@@ -35,7 +35,6 @@ module.exports = class Node {
 
     open() {
         this.connected = true;
-        this.manager.nodes.set(this.options.id, this);
         this.manager.emit('nodeConnected', this)
     }
 
