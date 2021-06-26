@@ -35,6 +35,8 @@ module.exports = class Manager extends EventEmitter {
 
     handleClientRaw(raw) {
         if(!raw || !["VOICE_SERVER_UPDATE", "VOICE_STATE_UPDATE"].includes(raw.t || "")) return;
-        for (const node of this.nodes.values()) node.send(raw);
+        const player = this.players.get(raw.d.guild_id)
+        if(!player) return;
+        player.node.send(raw);
     }
 }
