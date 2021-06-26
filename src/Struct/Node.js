@@ -9,7 +9,6 @@ module.exports = class Node {
         this.manager = manager;
         this.reconnectTimeout = null;
         this.retryAmount = 0;
-        this.players = new Set();
     }
 
     connect() {
@@ -71,7 +70,6 @@ module.exports = class Node {
     }
 
     async postSubscription({ userId, guildId, channelId }) {
-        this.players.add(guildId)
         return await petitio(`http${this.options.secure ? 's' : ''}://${this.options.host}:${this.options.port}/${userId}/${guildId}/subscription`, 'POST').body({ channelId }).send();
     }
 
