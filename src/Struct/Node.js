@@ -9,7 +9,7 @@ module.exports = class Node {
         this.manager = manager;
         this.reconnectTimeout = null;
         this.reconnectAttempts = 0
-        this.retryAmount = manager.retryAmount || 5;
+        this.retryAmount = manager.options.retryAmount || 5;
     }
 
     connect() {
