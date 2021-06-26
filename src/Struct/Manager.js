@@ -1,7 +1,7 @@
 const { default: Collection } = require("@discordjs/collection");
 const EventEmitter = require("events");
 const Node = require("./Node");
-const Player = require("./PLayer");
+const Player = require("./Player");
 
 module.exports = class Manager extends EventEmitter {
     constructor(options) {
