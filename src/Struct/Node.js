@@ -27,11 +27,11 @@ module.exports = class Node {
                 const error = new Error(`Cant connect after ${this.options.retryAmount} attempts.`)
                 this.manager.emit("nodeError", error, this);
             }
-        }, this.options.delay)
         this.reconnectAttempts++
         this.players.clear();
         this.ws.removeAllListeners();
         this.connect();
+        }, this.options.delay) 
     }
 
     open() {
