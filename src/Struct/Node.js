@@ -8,7 +8,8 @@ module.exports = class Node {
         this.connected = false;
         this.manager = manager;
         this.reconnectTimeout = null;
-        this.retryAmount = 0;
+        this.reconnectAttempts = 0
+        this.retryAmount = manager.retryAmount || 5;
     }
 
     connect() {
@@ -22,7 +23,8 @@ module.exports = class Node {
     reconnect() {
         if(this.connected) return;
         this.reconnectTimeout = setTimeout(() => {
-            if (this.reconnectAttempts >= this.options.retryAmount) {
+            if (this.reconnectAttempts >= this.retryAmount) {
+                this.reconnectAttempts++
                 const error = new Error(`Cant connect after ${this.options.retryAmount} attempts.`)
                 this.manager.emit("nodeError", error, this);
             }
@@ -53,15 +55,6 @@ module.exports = class Node {
                 break;
             case opCodes.VoiceStateUpdate:
                 this.manager.options.send(payload.d.d.guild_id, payload.d)
-                break;
-            case opCodes.OnStart:
-                this.manager.emit('trackStart');
-                break;
-            case opCodes.OnFinish:
-                this.manager.emit('trackFinish');
-                break;
-            case opCodes.OnError:
-                this.manager.emit('trackError');
                 break;
             default:
                 break;

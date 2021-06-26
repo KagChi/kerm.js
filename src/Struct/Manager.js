@@ -24,11 +24,11 @@ module.exports = class Manager extends EventEmitter {
         return this;
     }
 
-    create({ guildId, channelId }) {
+    create({ guildId, channelId, textChId }) {
         if(this.players.has(guildId)) {
             return this.players.get(guildId);
         }
-        const player = new Player({ guildId, channelId }, this.nodes.filter(x => x.connected).first(), this)
+        const player = new Player({ guildId, channelId, textChId }, this.nodes.filter(x => x.connected).first(), this)
         this.players.set(guildId, player) 
         return player;
     }
