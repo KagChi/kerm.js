@@ -24,11 +24,11 @@ module.exports = class Node {
         if(this.connected) return;
         this.reconnectTimeout = setTimeout(() => {
             if (this.reconnectAttempts >= this.retryAmount) {
-                this.reconnectAttempts++
                 const error = new Error(`Cant connect after ${this.options.retryAmount} attempts.`)
                 this.manager.emit("nodeError", error, this);
             }
         }, this.options.delay)
+        this.reconnectAttempts++
         this.players.clear();
         this.ws.removeAllListeners();
         this.connect();
